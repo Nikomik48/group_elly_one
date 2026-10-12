@@ -11,13 +11,13 @@ We plan to compare small language models on a CPU using Q4 and Q5 quantization. 
 | [Qwen3.5-0.8B](https://huggingface.co/Qwen/Qwen3.5-0.8B) | Smaller option if we need to stay below 1B, Apache 2.0 | Text-only runtime support and the number of parameters actually loaded |
 | [SLM-SQL-1.5B](https://huggingface.co/cycloneboy/SLM-SQL-1.5B) | Trained specifically for Text-to-SQL | Model files, prompt format, license and conversion compatibility |
 
-We would test the first two models and the 0.8B model, then select one based on accuracy, memory, response time and energy. If the supervisor requires a strict 1B limit, larger models will serve only as references.
+We would test the first two models and the 0.8B model, then select one based on accuracy, memory, response time and energy. If a strict 1B limit is required, larger models will serve only as references.
 
-The [SLM-SQL paper](https://arxiv.org/html/2507.22478v1) reports 67.08% BIRD-dev execution accuracy for its 1.5B model. However, it uses 64 generation samples and eight merge-revision samples. Our one-call experiment uses much less computation, so we cannot use that score as our expected accuracy.
+The [SLM-SQL paper](https://arxiv.org/html/2507.22478v1) reports 67.08% BIRD-dev execution accuracy for its 1.5B model. However, it uses 64 generation samples and eight merge-revision samples. Our one call experiment uses much less computation, so we cannot use that score as our expected accuracy.
 
 ## Estimate CPU inference requirements
 
-Initial tests would use **16 GiB RAM**, one request at a time, a 4,096-token context and a 2,048/256-token input/output limit. We need to confirm the CPU and OS and disable accelerator offloading.
+Initial tests would use **16 GiB RAM**, one request at a time, a 4,096-token context and a 2,048/256-token input/output limit. We need to confirm the CPU and OS and possibly disable accelerator offloading.
 
 Qwen2.5-Coder-1.5B's model files are approximately **1.12 GB at Q4_K_M**, **1.29 GB at Q5_K_M** and **1.89 GB at Q8_0**. At 4,096 tokens, its estimated F16 KV cache is **112 MiB**, compared with **448 MiB** for Qwen3-1.7B. We must also allow memory for runtime buffers, retrieval, the database and the operating system. [Model files](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF/tree/main), [coder configuration](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct/raw/main/config.json), [Qwen3 configuration](https://huggingface.co/Qwen/Qwen3-1.7B/raw/main/config.json).
 
