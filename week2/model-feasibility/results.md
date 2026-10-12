@@ -1,9 +1,5 @@
 # Lightweight and CPU Deployable Model Feasibility
 
-**Project:** ENS491 #417  
-**Owner:** Cem Kaya  
-**Sources checked:** 12 October 2026
-
 We plan to compare small language models on a CPU using Q4 and Q5 quantization. The memory estimates below assume a computer with 16 GiB RAM. We will check accuracy, response time and energy use once the project hardware is confirmed. We have not run these tests yet.
 
 ## Identify candidate small language models
