@@ -21,7 +21,12 @@ Solutions:
 - Component Factorization
 - Template Hierarchy
 --> Snow 2.0: 2.6m tokens -> 34.7k Tokens (%98.7 saving) / SRR: %0 -> %56.5
-  
+
+#### Sources
+
+- [Database Context Compression for Text-to-SQL on Real-World Large Databases](https://arxiv.org/abs/2606.28601)
+- [LinkAlign: Scalable Schema Linking for Real-World Large-Scale Multi-Database Text-to-SQL](https://aclanthology.org/2025.emnlp-main.51/)
+- [Enterprise Text-to-SQL: Are Agents Ready to Scale? — NOVAS 2026 Accepted Papers](https://www.novasworkshop.org/accepted-papers)
 
 ### 2) Cryptic Column Names & Semantic Layer Dimension
 -> Semantic gap between business semantics and data scheme
@@ -41,6 +46,12 @@ Solutions:
 - DoubleAgent / Knowledge Graph Integration
 - TAHOE (Hint Bank Architecture)
 
+#### Sources
+
+- [DoubleAgent: Towards Text-to-SQL on Enterprise Databases — NOVAS 2026](https://www.novasworkshop.org/accepted-papers)
+- [Prompting Strategies for Enterprise Text-to-SQL: An Ablation Study — NOVAS 2026](https://www.novasworkshop.org/accepted-papers)
+- [TAHOE: Text-to-SQL with Automated Hint Optimization from Experience](https://arxiv.org/abs/2606.12387)
+
 
 ### 3) Schema Linking & Inference Dimension
 => Besides Data complexity and documentation, LLM's may link the wrong columns and fail to generate SQL queries in a semantic way.
@@ -58,6 +69,13 @@ Solutions:
 - Agentic Exploration - APEX-SQL / LinkAlign
 -  SQLHD / SQLens / Reflect-SQL
 
+#### Sources
+
+- [RSL-SQL: Robust Schema Linking in Text-to-SQL Generation](https://arxiv.org/abs/2411.00073)
+- [LinkAlign: Scalable Schema Linking for Real-World Large-Scale Multi-Database Text-to-SQL](https://aclanthology.org/2025.emnlp-main.51/)
+- [SQLens: An End-to-End Framework for Error Detection and Correction in Text-to-SQL](https://proceedings.neurips.cc/paper_files/paper/2025/hash/c57812dee8acade8c5e385260b2cde28-Abstract-Conference.html)
+- [Hallucination Detection for LLM-based Text-to-SQL Generation via Two-Stage Metamorphic Testing](https://arxiv.org/abs/2512.22250)
+- [Reflect-SQL: A Self-Reflection Based Framework for Text-to-SQL](https://arxiv.org/abs/2609.02944)
 
 ### 4) Input, Intent, Dialogue Quality
 - This is the problem resulting from the input requested.
@@ -83,6 +101,13 @@ Solutions:
 - MTSQL-R1
 - Reflect-SQL
 
+#### Sources
+
+- [AmbiSQL: Interactive Ambiguity Detection and Resolution for Text-to-SQL](https://arxiv.org/abs/2508.15276)
+- [AmbiSQL GitHub Repository](https://github.com/JustinzjDing/AmbiSQL)
+- [MTSQL-R1: Towards Long-Horizon Multi-Turn Text-to-SQL via Agentic Training](https://aclanthology.org/2026.acl-long.1563/)
+- [Reflect-SQL: A Self-Reflection Based Framework for Text-to-SQL](https://arxiv.org/abs/2609.02944)
+
 
 ### 5) Infrastructure, Cost, Hardware & Privacy Dimension
 => Problems due to GPU and hardware limitations
@@ -103,4 +128,19 @@ Solutions:
 - Mask SQL
 - Lite-SQL / CodeS / SLM-SQL
 - Adaptive Pipeline Router
+  
+### Sources
+
+- [Enterprise Text-to-SQL: Are Agents Ready to Scale? — NOVAS 2026](https://www.novasworkshop.org/accepted-papers)
+- [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](https://arxiv.org/abs/2509.23459)
+- [LitE-SQL: A Lightweight and Efficient Text-to-SQL Framework](https://aclanthology.org/2026.findings-eacl.186/)
+- [CodeS: Towards Building Open-source Language Models for Text-to-SQL](https://doi.org/10.1145/3654930)
+- [SLM-SQL: An Exploration of Small Language Models for Text-to-SQL](https://aclanthology.org/2025.findings-ijcnlp.92/)
+
+- [LitE-SQL GitHub](https://github.com/shengminp/LitE-SQL)
+- [CodeS GitHub](https://github.com/RUCKBReasoning/codes)
+- [MaskSQL GitHub](https://github.com/VectorInstitute/masksql)
+  
+## Summaries as a table:
+<img width="1062" height="1047" alt="image" src="https://github.com/user-attachments/assets/677e5f99-e067-41a4-bd71-559f20134613" />
 
