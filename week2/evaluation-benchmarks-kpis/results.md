@@ -1,7 +1,5 @@
 # Evaluation Benchmarks and KPIs
 
-**Project:** ENS491 #417 · **Owner:** Cem Kaya · **Sources checked:** 12 October 2026
-
 We will test correctness, resource use and safe execution on public benchmarks and Marine Transport questions. This proposal plan still needs the project database and hardware before experiments can begin.
 
 ## Select suitable public Text-to-SQL benchmarks
