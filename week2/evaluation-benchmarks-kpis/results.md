@@ -15,7 +15,7 @@ Record dataset/database revisions, evaluator settings and licenses. Check Arcwis
 
 ## Design the Marine Transport evaluation dataset
 
-We propose **300 answerable questions: 100 for development and 200 for final testing**. We will use the schema provided to us and an isolated, approved database snapshot. Agree question language, units, time zones and business definitions before writing SQL. Keep confidential data out of the public repository.
+We propose a core set of **300 answerable questions: 100 for development and 200 for final testing**. Use 50 development questions for the initial pilot and the remaining 50 to check revisions, keeping their query families separate. Check annotation time during the pilot. We will use the provided schema and an isolated, approved database snapshot. Agree question language, units, time zones and business definitions before writing SQL. Keep confidential data out of the public repository.
 
 | Main question type | Development / test | Example topic, subject to available data |
 | --- | ---: | --- |
@@ -25,11 +25,11 @@ We propose **300 answerable questions: 100 for development and 200 for final tes
 | Time-based comparisons | 20 / 40 | Monthly changes in traffic or turnaround time |
 | Nested queries or ranking | 20 / 40 | Ports above the overall average |
 
-Equal counts cover operations rather than traffic frequencies. Tag NULLs, duplicates, empty results, date boundaries and snapshots. Empty results can be correct; forecasting without supporting data or a model is outside scope.
+Equal counts cover operations rather than traffic frequencies. Derive questions from agreed user tasks and retain difficult cases. Tag NULLs, duplicates, empty results, date boundaries and snapshots. Empty results can be correct; forecasting without supporting data or a model is outside scope.
 
-One member writes each question, intent and gold SQL; another verifies it. Resolve domain disagreements with the supervisor. Record ID, snapshot, family/split, tags, expected action and reviewer. Keep each query family in one split. A single port schema cannot establish unseen-schema generalization.
+One member writes each question, intent and gold SQL; another verifies it by execution and checks the intended result. Resolve domain disagreements with the supervisor. Record ID, snapshot, family/split, tags, expected action and reviewer. Keep each query family in one split; changing a date or vessel name alone does not create a new family. A single port schema cannot establish unseen-schema generalization.
 
-Add **40 ambiguous and 40 unanswerable questions**, each split 10 development / 30 test, with expected clarification/refusal [6]. Give 50 preselected test questions one paraphrase and one schema-renamed version each; update metadata and gold SQL consistently. Add edge-case database copies for 20 join/aggregation cases to detect coincidental matches [3]. These checks do not increase the 200-question accuracy sample.
+Add **40 ambiguous and 40 unanswerable questions**, each split 10 development / 30 test, with expected clarification/refusal [6]. Give 50 preselected test questions one paraphrase and one schema-renamed version each; update metadata and gold SQL consistently. Add edge-case database copies for 20 join/aggregation cases to detect coincidental matches [3]. The core Marine workload is 380 original questions plus 100 robustness variants, with separate edge-case and policy tests. These checks do not increase the 200-question accuracy sample.
 
 ## Define accuracy KPIs
 
@@ -53,25 +53,29 @@ Fix CPU settings and warm-up. For energy, repeat 50 questions in five blocks, va
 
 Test execution directly with **100 prohibited SQL cases**: writes/DDL, multiple statements, unauthorized reads and dangerous functions. Check false rejection on **100 allowed gold queries**. Add **20 cancellation/error tests**. Direct tests check the policy even when the model refuses. Enforce permissions and operation restrictions in isolation, beyond a SELECT prefix check [8].
 
-Report blocked cases / 100, false rejections / 100 and controlled resource-limit outcomes / 20. Separately report correct clarification / 30 ambiguous questions, correct refusal / 30 unanswerable questions and unnecessary deferral / 200 answerable questions. Clarifications must request the labelled missing information. Check audit records for every request.
+Report blocked cases / 100, false rejections / 100 and controlled resource-limit outcomes / 20. Separately report correct clarification / 30 ambiguous questions, correct refusal / 30 unanswerable questions and unnecessary deferral / all answerable test questions. Clarifications must request the labelled missing information. Check audit records for every request.
 
 ## Define defensible numeric targets
 
 | Measure | Proposed target | Why we chose it |
 | --- | --- | --- |
-| Marine EX | **+5 percentage points** over the same-model baseline | Ten additional correct answers out of 200 is a useful improvement. It is a research objective, to be checked against pilot errors and available headroom. |
-| Robustness loss | **No greater than the baseline's loss**, for each variant type | Directly tests whether our method improves robustness without choosing an unsupported absolute accuracy. |
-| Clarification and refusal | **At least 24/30 correct in each set**; unnecessary deferral **≤10/200** | Initial usability goals: recognize most unsupported cases while limiting interruptions. Pilot-dependent, not copied from a paper. |
-| CPU efficiency | Generation **p95 ≤30 s**, service RSS **≤8 GiB** | Carries forward the feasibility study's 16 GiB host and 2,048-input/256-output, one-call scenario; needs hardware testing. |
-| Quantization | Observed EX loss **≤2 points**; model files **≥35% smaller** than Q8 | Published Q4/Q8 files are 1.12/1.89 GB, a 40.7% reduction [11]. The two-point limit is our proposed quality tolerance; **≥20% energy reduction** is a secondary goal needing measurement. |
-| Execution policy | **100/100 prohibited cases blocked**, allowed-query false rejection **≤5/100** | A finite acceptance test for the execution layer. |
-| Resource handling and logging | **20/20 controlled outcomes**, **100% of requests logged** | Software acceptance criteria. Initially configure a 5 s SQL timeout and 60 s request deadline; test cancellation within 1 s of the limit. |
+| Marine EX | Initial goal **+3 percentage points** over the same-model baseline; **+5 points** as a stretch goal | Six and ten net additional correct answers out of 200. Confirm the goal after the pilot; report the paired difference and uncertainty. |
+| Robustness loss | Aim for **no greater loss than the baseline**, for each variant type | Compare the same 50 originals and their variants; report uncertainty in the change. |
+| Clarification and refusal | Initial goal **≥21/30 correct per set**; **24/30** as a stretch goal; unnecessary deferral **≤10%** of answerable questions (**≤20/200**) | Confirm these usability goals after the pilot; assess response content as well as the chosen action. |
+| CPU efficiency | Service RSS **≤12 GiB** on a **16 GiB** host; report generation and end-to-end **p50/p95** | Matches the updated [model feasibility settings](../model-feasibility/results.md); set latency thresholds after the CPU pilot. |
+| Quantization | Proposed observed EX-loss tolerance **≤5 points**, with **≤2 preferred**; model files **≥25% smaller** than Q8_0 | Published Q4/Q5 files are 40.7%/31.7% smaller [11]. Confirm tolerance after the pilot; report its interval and measured energy change. |
+| Execution policy | **100/100 prohibited cases blocked**, allowed-query false rejection **≤5/100** | Acceptance tests for the execution layer. |
+| Resource handling and logging | **20/20 controlled outcomes**, **100% of requests logged** | Start with a **30 s SQL timeout** and **600 s request deadline**; verify cancellation and stopped work within **5 s** after the limit. These ceilings are provisional; measure latency separately and use shorter deadlines for cancellation tests. |
 
-Schema-alignment research supports testing for gains [9], not a predicted five-point improvement for our model. Review these proposed targets after the pilot; if EX has insufficient headroom, choose an error-reduction target before final testing. The draft's 70% accuracy, five-second response and five-joule values remain unvalidated.
+Schema-alignment research supports testing for gains [9]. The improvement and usability goals are provisional project choices. Agree final thresholds with the supervisor after the pilot and before held-out testing. The draft's 70% accuracy, five-second response and five-joule values remain unvalidated.
 
-Report 95% intervals: Wilson for descriptive proportions and paired resampling for accuracy differences, grouping by database or Marine query family. Under independence, worst-case Wilson half-widths are about **4.4 points for 498 questions** and **6.9 for 200**; dependence can widen uncertainty. Repeated runs do not add independent questions. Five-point gains and two-point retention may remain inconclusive. Likewise, 100/100 blocked cases is not a universal safety guarantee [10].
+Report 95% intervals: Wilson for descriptive proportions and paired resampling for accuracy differences, grouping by database or Marine query family. Under independence, worst-case Wilson half-widths are about **4.4 points for 498 questions** and **6.9 for 200** [10]. Treat the 40-question operation groups as diagnostics. Gain uncertainty depends on paired improvements and regressions. Repeated runs and paraphrases do not add independent questions; family dependence can widen intervals.
 
-Compare baseline, selected method and ablation at fixed model/token/call limits. Count context overflow as failure rather than dropping questions. Report extra-call repair separately. Start with a **50-question development pilot**, reviewed dataset examples and a reproducible baseline configuration. SQL benchmarks do not validate an MDX extension.
+Optionally expand the test set to **400 questions (80 per type)** if development-only precision and workload estimates justify it. Decide before dataset freeze and any test predictions. The worst-case independent half-width becomes **4.9 points** [10], without guaranteeing a significant gain. The core test commitment remains 200. A 100/100 policy pass does not establish universal safety.
+
+Compare baseline, selected method and ablation at fixed model/token/call limits. Start with **16,384 context, 12,288 input and 2,048 output tokens**, one request at a time and SQL-only output without a reasoning trace. Check complete prompts and output cutoffs during development, then freeze the limits. Count context overflow and truncated SQL as failures; never execute incomplete output. Report extra-call repair separately.
+
+The **50-question development pilot** will measure annotation effort, memory, typical and long-request latency, and energy. Estimate the cost and runtime of the full baseline, method and ablation runs before committing to optional extensions. SQL benchmarks do not validate an MDX extension.
 
 ## Sources
 
