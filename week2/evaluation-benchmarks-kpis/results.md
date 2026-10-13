@@ -15,7 +15,7 @@ Record dataset/database revisions, evaluator settings and licenses. Check Arcwis
 
 ## Design the Marine Transport evaluation dataset
 
-We propose **300 answerable questions: 100 for development and 200 for final testing**. Use the supervisor's schema and an isolated, approved database snapshot. Agree question language, units, time zones and business definitions before writing SQL. Keep confidential data out of the public repository.
+We propose **300 answerable questions: 100 for development and 200 for final testing**. We will use the schema provided to us and an isolated, approved database snapshot. Agree question language, units, time zones and business definitions before writing SQL. Keep confidential data out of the public repository.
 
 | Main question type | Development / test | Example topic, subject to available data |
 | --- | ---: | --- |
