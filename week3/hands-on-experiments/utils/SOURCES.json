@@ -1,0 +1,36 @@
+{
+  "upstream": {
+    "repository": "https://github.com/uiuc-kang-lab/text_to_sql_benchmarks",
+    "revision": "fe766045c55b6875a43b30e9ac7683df5582f8cf",
+    "authors": "Tengjun Jin, Yoojin Choi, Yuxuan Zhu and Daniel Kang",
+    "work": "Pervasive Annotation Errors Break Text-to-SQL Benchmarks and Leaderboards",
+    "license": "CC-BY-SA-4.0 (upstream repository LICENSE)",
+    "modifications": "None; both files copied byte-for-byte",
+    "files": {
+      "evaluate.py": {
+        "source_path": "text_to_sql_agents/evaluate.py",
+        "sha256": "884be9b218aecbcb1cdb082dd01fda582c421e62692dc4c2e14f7a4508dc75c0"
+      },
+      "LICENSE": {
+        "source_path": "LICENSE",
+        "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+      }
+    }
+  },
+  "local": {
+    "source_path": "experiments/qwen3_arcwise/run_experiment.py",
+    "source_sha256": "074ddf5f5ec4f1753d7f70dcfda91e9c041c1badb24a2903273b1339022f6d62",
+    "extracted_functions": [
+      "sql_ast",
+      "normalize_sql",
+      "worker",
+      "execute",
+      "key_cell",
+      "results_match"
+    ],
+    "function_changes": "None",
+    "packaging_changes": "Standalone imports and CLI; five original tests with import path adjusted",
+    "baseline_scores": "Qwen3-1.7B: 5/50; Qwen2.5-Coder-3B-Instruct: 12/50; local comparator only"
+  },
+  "retrieved_date": "2026-10-19"
+}
