@@ -8,14 +8,28 @@ The schema, question order, evidence and evaluator were unchanged. Each question
 
 ## Results
 
+### Query outcomes
+
+Each model answered the same **50 questions** once: **100 scored attempts** in total. Warm-up calls, smoke tests and later demos are excluded.
+
+| Query outcome | Qwen3-1.7B | Qwen2.5-Coder-3B-Instruct |
+| --- | ---: | ---: |
+| Queries attempted | 50 | 50 |
+| SQL failed validation or execution | 31 (62%) | 20 (40%) |
+| SQL ran, but returned a different result | 14 (28%) | 18 (36%) |
+| SQL ran and matched the reference result | **5 (10%)** | **12 (24%)** |
+| SQL text identical to reference (included in matches above) | **0** | **8** |
+
+Failed SQL + different results + matching results add up to 50 for each model. In total, **19 Qwen3 queries** and **30 Coder queries** ran successfully. All reference queries ran successfully.
+
+**Literal SQL match** is included in the correct-result count, not added to it. It compares the recorded `predicted_sql` and `gold_sql` character for character, without normalizing whitespace, case or semicolons.
+
+A correct result means a matching query result table. The read-only queries leave the database state unchanged.
+
+### Time, memory and token use
+
 | Metric | Qwen3-1.7B | Qwen2.5-Coder-3B-Instruct |
 | --- | ---: | ---: |
-| SQL generation attempts | 50 | 50 |
-| SQL matching reference results | **5/50 (10%)** | **12/50 (24%)** |
-| SQL executed successfully | 19/50 (38%) | 30/50 (60%) |
-| SQL failing validation or execution | **31/50 (62%)** | **20/50 (40%)** |
-| Executed SQL with nonmatching results | 14/50 (28%) | 18/50 (36%) |
-| SQL text identical to reference | **0/50 (0%)** | **8/50 (16%)** |
 | Generation time, median — active clock | 3.66 s | 10.17 s |
 | Generation time, p95 — active clock | 10.04 s | 16.50 s |
 | Sampled peak server RAM (RSS) | 3.47 GiB | 3.66 GiB |
@@ -23,9 +37,7 @@ The schema, question order, evidence and evaluator were unchanged. Each question
 | Total output tokens | 2,569 | 2,911 |
 | Model download and preparation | 68.1 s | 243.7 s |
 
-There were **100 scored generation attempts in total: 50 per model on the same 50 questions**. Warm-up calls, smoke tests and later demos are excluded. A correct result means a query result table matching the reference; the read-only queries do not change the database state. Text identity compares the recorded `predicted_sql` and `gold_sql` character for character, without normalizing whitespace, case or semicolons. The eight identical Coder queries are included in its 12 result matches; Qwen3's five matches use different SQL text.
-
-Result-match accuracy uses all 50 questions, including execution failures. All reference queries executed successfully. RAM was sampled every 0.5 seconds; output counts include end tokens. Coder reused the existing runtime and data, and download times reflect the available connection.
+RAM was sampled every 0.5 seconds; output counts include end tokens. Coder reused the existing runtime and data, and download times reflect the available connection.
 
 ## Interpretation and limitations
 
