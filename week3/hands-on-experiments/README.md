@@ -1,5 +1,7 @@
 # Evaluation code and scoring notes
 
+For a new installation, follow [setup-notes.md](setup-notes.md). Demo commands and interpretation are in [usage-notes.md](usage-notes.md); runnable inference/setup code is in [demo/](demo/).
+
 The scores in [results.md](results.md)—**5/50 for Qwen3-1.7B and 12/50 for Qwen2.5-Coder-3B-Instruct**—were calculated with our local comparator. They have **not** been scored with the upstream evaluator below and are not official BIRD scores.
 
 ## Which code is whose?
@@ -57,4 +59,4 @@ To use the upstream evaluator:
 
 For this pinned upstream script, use exactly the same IDs in both inputs and **sort the gold list by numeric question ID**: predictions are sorted internally, but gold rows retain file order. It appends to `results.txt` in the working directory. Use isolated database copies: it executes through a regular connection with rollback and does not enforce its declared timeout argument. It does not provide our execution restrictions.
 
-Only evaluation utilities are included here. Model downloads, databases, inference setup and private data are not bundled.
+The `utils/` folder contains evaluation utilities; `demo/` contains the full local runner and public-artifact download scripts. The new installer adds platform checks and fixed runtime/data checksums; comparison and generation rules are unchanged. Model weights, databases, original run records and private data are not bundled.

@@ -1,11 +1,13 @@
 # Demo usage notes
 
-These commands use the models, databases and Python environment already installed on this Mac. Nothing needs to be downloaded again on that machine. The commands below refer to its existing local experiment folder; cloning this repository alone does not recreate that installation. The demo runner and its inference setup are currently local; the published `utils/` folder contains evaluation utilities. Run one demo at a time; the local server uses port 18917 and stops automatically.
+For a new machine, complete [setup-notes.md](setup-notes.md) first. The demo and download scripts are in `demo/`; evaluation utilities are in `utils/`. Run one demo at a time; the local server uses port 18917 and stops automatically. Run the `cd` command below from the directory containing your clone; skip it if setup has already left you inside `demo/`.
+
+Cem can also keep using the existing installation at `/Users/cem/Documents/ens491/experiments/qwen3_arcwise`; the demo commands are the same after entering that folder.
 
 ## Fresh inference
 
 ```sh
-cd /Users/cem/Documents/ens491/experiments/qwen3_arcwise
+cd group_elly_one/week3/hands-on-experiments/demo
 
 # Both models, one after the other; first question from the original scored subset.
 caffeinate -i .local/venv/bin/python demo.py --model both --question-id 765
@@ -48,7 +50,7 @@ Question 765 is an introductory count query. Both models matched it in the origi
 .local/venv/bin/python demo.py --mode saved --model both --question-id 765
 ```
 
-This re-executes the original saved predictions against the local database. It is labelled **saved** in both the terminal and report. Generation times and tokens are historical, not fresh measurements.
+This requires the original run records, which are not bundled with the repository. It is available in the original local experiment folder; use live mode on a fresh installation. It re-executes the original saved predictions against the local database. It is labelled **saved** in both the terminal and report. Generation times and tokens are historical, not fresh measurements.
 
 ## Database state and result matching
 
