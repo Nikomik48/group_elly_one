@@ -12,6 +12,8 @@ The models received the SQLite schema, question and supplied evidence. Reference
 | 1254 | thrombosis_prediction | SQL error | Mismatch |
 | 5 | california_schools | SQL error | Mismatch |
 
+**Correct-result note:** For question **765**, both models returned the reference result (`127`). For question **1312**, only **Qwen2.5-Coder-3B-Instruct** returned the reference result (`Business`). Neither model matched the reference results for questions **206, 1254 or 5**. Here, a correct result means a matching query result table; the read-only queries leave the database state unchanged.
+
 ## 1. superhero — question 765
 
 **Question:** How many heroes have stealth power?
